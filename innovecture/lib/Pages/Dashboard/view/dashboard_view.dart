@@ -42,30 +42,37 @@ class DashBoardView extends GetView<DashboardController> {
             SizedBox(
               height: 200.0,
               child: Obx(
-                () => ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.tvShowList.length,
-                  itemBuilder: (BuildContext context, int index) => InkWell(
-                    onTap: () => controller.selectImage(index,
-                        controller.tvShowList[index].imageThumbnailPath!),
-                    child: Card(
-                      child: Container(
-                          width: 120.0,
-                          height: 64.0,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(controller
-                                      .tvShowList[index]
-                                      .imageThumbnailPath!)))),
-                      // child: Container(
-                      //   child: Text("${controller.tvShowList[index].name}"),
-                      // ),
-                    ),
-                  ),
-                ),
+                () => controller.isLoading.value == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.blackColor,
+                        ),
+                      )
+                    : ListView.builder(
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.tvShowList.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            InkWell(
+                          onTap: () => controller.selectImage(index,
+                              controller.tvShowList[index].imageThumbnailPath!),
+                          child: Card(
+                            child: Container(
+                                width: 120.0,
+                                height: 64.0,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(controller
+                                            .tvShowList[index]
+                                            .imageThumbnailPath!)))),
+                            // child: Container(
+                            //   child: Text("${controller.tvShowList[index].name}"),
+                            // ),
+                          ),
+                        ),
+                      ),
               ),
             ),
             SizedBox(
